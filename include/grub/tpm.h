@@ -79,4 +79,5 @@ grub_err_t grub_tpm_execute (PassThroughToTPM_InputParamBlock *inbuf,
 			     PassThroughToTPM_OutputParamBlock *outbuf);
 grub_err_t grub_tpm_log_event (unsigned char *buf, grub_size_t size,
 			       grub_uint8_t pcr, const char *description);
+
 #endif

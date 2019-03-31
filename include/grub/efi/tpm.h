@@ -24,6 +24,15 @@
 
 #define TCG_ALG_SHA 0x00000004
 
+#define EFI_TCG2_EVENT_LOG_FORMAT_TCG_1_2 0x00000001
+#define EFI_TCG2_EVENT_LOG_FORMAT_TCG_2   0x00000002
+
+#define EFI_TCG2_BOOT_HASH_ALG_SHA1    0x00000001
+#define EFI_TCG2_BOOT_HASH_ALG_SHA256  0x00000002
+#define EFI_TCG2_BOOT_HASH_ALG_SHA384  0x00000004
+#define EFI_TCG2_BOOT_HASH_ALG_SHA512  0x00000008
+#define EFI_TCG2_BOOT_HASH_ALG_SM3_256 0x00000010
+
 /* These structs are as defined in the TCG EFI Protocol Specification, family 2.0. */
 
 struct __TCG_VERSION
@@ -194,5 +203,13 @@ struct grub_efi_tpm2_protocol
 };
 
 typedef struct grub_efi_tpm2_protocol grub_efi_tpm2_protocol_t;
+
+grub_efi_boolean_t
+grub_tpm1_present (grub_efi_tpm_protocol_t *tpm);
+grub_efi_boolean_t
+grub_tpm2_present (grub_efi_tpm2_protocol_t *tpm);
+grub_efi_boolean_t
+grub_tpm_handle_find (grub_efi_handle_t *tpm_handle,
+		      grub_efi_uint8_t *protocol_version);
 
 #endif

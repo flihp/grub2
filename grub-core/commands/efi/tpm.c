@@ -38,7 +38,7 @@ static grub_uint8_t grub_tpm_version;
 static grub_int8_t tpm1_present = -1;
 static grub_int8_t tpm2_present = -1;
 
-static grub_efi_boolean_t
+grub_efi_boolean_t
 grub_tpm1_present (grub_efi_tpm_protocol_t *tpm)
 {
   grub_efi_status_t status;
@@ -61,7 +61,7 @@ grub_tpm1_present (grub_efi_tpm_protocol_t *tpm)
   return tpm1_present = 1;
 }
 
-static grub_efi_boolean_t
+grub_efi_boolean_t
 grub_tpm2_present (grub_efi_tpm2_protocol_t *tpm)
 {
   grub_efi_status_t status;
@@ -80,7 +80,7 @@ grub_tpm2_present (grub_efi_tpm2_protocol_t *tpm)
   return tpm2_present = 1;
 }
 
-static grub_efi_boolean_t
+grub_efi_boolean_t
 grub_tpm_handle_find (grub_efi_handle_t *tpm_handle,
 		      grub_efi_uint8_t *protocol_version)
 {
