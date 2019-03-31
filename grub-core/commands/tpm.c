@@ -19,6 +19,7 @@
  */
 
 #include <grub/err.h>
+#include <grub/extcmd.h>
 #include <grub/i18n.h>
 #include <grub/misc.h>
 #include <grub/mm.h>
@@ -84,6 +85,15 @@ grub_tpm_verify_string (char *str, enum grub_verify_string_type type)
   return status;
 }
 
+static grub_err_t
+grub_tpm_print_bootservice_capability (
+    grub_extcmd_context_t ctx __attribute__ ((unused)),
+    int argc __attribute__ ((unused)),
+    char **args __attribute__ ((unused)))
+{
+    return grub_tpm_print_bootservice_caps ();
+}
+
 struct grub_file_verifier grub_tpm_verifier = {
   .name = "tpm",
   .init = grub_tpm_verify_init,
@@ -91,12 +101,27 @@ struct grub_file_verifier grub_tpm_verifier = {
   .verify_string = grub_tpm_verify_string,
 };
 
+static grub_extcmd_t cmd_print_bscaps;
+static const struct grub_arg_option opts_help[] =
+  {
+    { "help", 'h', 0, N_("display help message"), NULL, ARG_TYPE_NONE },
+    { 0 }
+  };
+
 GRUB_MOD_INIT (tpm)
 {
   grub_verifier_register (&grub_tpm_verifier);
+  cmd_print_bscaps =
+    grub_register_extcmd (N_("tpm-print-bscaps"),
+                          grub_tpm_print_bootservice_capability,
+                          GRUB_COMMAND_FLAG_EXTCMD,
+                          N_("[-h]"),
+                          N_("Display TPM bootservice capability structure.\n"),
+                          opts_help);
 }
 
 GRUB_MOD_FINI (tpm)
 {
   grub_verifier_unregister (&grub_tpm_verifier);
+  grub_unregister_extcmd (cmd_print_bscaps);
 }

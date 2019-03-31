@@ -34,6 +34,15 @@
 
 #define EV_IPL 0x0d
 
+#define EFI_TCG2_EVENT_LOG_FORMAT_TCG_1_2 0x00000001
+#define EFI_TCG2_EVENT_LOG_FORMAT_TCG_2   0x00000002
+
+#define EFI_TCG2_BOOT_HASH_ALG_SHA1    0x00000001
+#define EFI_TCG2_BOOT_HASH_ALG_SHA256  0x00000002
+#define EFI_TCG2_BOOT_HASH_ALG_SHA384  0x00000004
+#define EFI_TCG2_BOOT_HASH_ALG_SHA512  0x00000008
+#define EFI_TCG2_BOOT_HASH_ALG_SM3_256 0x00000010
+
 /* TCG_PassThroughToTPM Input Parameter Block. */
 typedef struct
 {
@@ -79,4 +88,5 @@ grub_err_t grub_tpm_execute (PassThroughToTPM_InputParamBlock *inbuf,
 			     PassThroughToTPM_OutputParamBlock *outbuf);
 grub_err_t grub_tpm_log_event (unsigned char *buf, grub_size_t size,
 			       grub_uint8_t pcr, const char *description);
+grub_err_t grub_tpm_print_bootservices_caps (void);
 #endif
