@@ -33,6 +33,26 @@
 #define EFI_TCG2_BOOT_HASH_ALG_SHA512  0x00000008
 #define EFI_TCG2_BOOT_HASH_ALG_SM3_256 0x00000010
 
+#define TPM2_SHA_DIGEST_SIZE     20
+#define TPM2_SHA1_DIGEST_SIZE    20
+#define TPM2_SHA256_DIGEST_SIZE  32
+#define TPM2_SHA384_DIGEST_SIZE  48
+#define TPM2_SHA512_DIGEST_SIZE  64
+#define TPM2_SM3_256_DIGEST_SIZE 32
+
+/* From TCG EFI Platform Specification For TPM Family 1.1 or 1.2 */
+#define EV_EFI_EVENT_BASE                0x80000000
+#define EV_EFI_VARIABLE_DRIVER_CONFIG    EV_EFI_EVENT_BASE + 0x1
+#define EV_EFI_VARIABLE_BOOT             EV_EFI_EVENT_BASE + 0x2
+#define EV_EFI_BOOT_SERVICES_APPLICATION EV_EFI_EVENT_BASE + 0x3
+#define EV_EFI_BOOT_SERVICES_DRIVER      EV_EFI_EVENT_BASE + 0x4
+#define EV_EFI_RUNTIME_SERVICES_DRIVER   EV_EFI_EVENT_BASE + 0x5
+#define EV_EFI_GPT_EVENT                 EV_EFI_EVENT_BASE + 0x6
+#define EV_EFI_ACTION                    EV_EFI_EVENT_BASE + 0x7
+#define EV_EFI_PLATFORM_FIRMWARE_BLOB    EV_EFI_EVENT_BASE + 0x8
+#define EV_EFI_HANDOFF_TABLES            EV_EFI_EVENT_BASE + 0x9
+#define EV_EFI_VARIABLE_AUTHORITY        EV_EFI_EVENT_BASE + 0xe0
+
 /* These structs are as defined in the TCG EFI Protocol Specification, family 2.0. */
 
 struct __TCG_VERSION
@@ -157,6 +177,25 @@ struct tdEFI_TCG2_EVENT
   grub_efi_uint8_t      Event[1];
 } GRUB_PACKED;
 typedef struct tdEFI_TCG2_EVENT EFI_TCG2_EVENT;
+
+struct dtTPMT_HA {
+  grub_efi_uint16_t AlgorithmId;
+  grub_efi_uint8_t Digest[];
+} GRUB_PACKED;
+typedef struct dtTPMT_HA TPMT_HA;
+
+struct dtTCG_EVENT_HEADER2 {
+  TCG_PCRINDEX PCRIndex;
+  TCG_EVENTTYPE EventType;
+  grub_efi_uint32_t DigestCount;
+  TPMT_HA Digests[];
+} GRUB_PACKED;
+typedef struct dtTCG_EVENT_HEADER2 TCG_EVENT_HEADER2;
+
+typedef struct {
+  grub_efi_uint32_t EventSize;
+  grub_efi_uint8_t Event [];
+} GRUB_PACKED TCG_EVENT2;
 
 struct grub_efi_tpm2_protocol
 {

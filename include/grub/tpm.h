@@ -32,7 +32,31 @@
 #define TPM_TAG_RQU_COMMAND 0x00C1
 #define TPM_ORD_Extend 0x14
 
-#define EV_IPL 0x0d
+/*
+ * Log event types. These are spread out over 2 specs:
+ * "TCG EFI Protocol Specification For TPM Family 1.1 or 1.2" and
+ * "TCG PC Client Specific Implementation Specification for Conventional BIOS"
+ */
+#define EV_PREBOOT_CERT            0x0
+#define EV_POST_CODE               0x1
+#define EV_UNUSED                  0x2
+#define EV_NO_ACTION               0x3
+#define EV_SEPARATOR               0x4
+#define EV_ACTION                  0x5
+#define EV_EVENT_TAG               0x6
+#define EV_S_CRTM_CONTENTS         0x7
+#define EV_S_CRTM_VERSION          0x8
+#define EV_CPU_MICROCODE           0x9
+#define EV_PLATFORM_CONFIG_FLAGS   0xa
+#define EV_TABLE_OF_DEVICES        0xb
+#define EV_COMPACT_HASH            0xc
+#define EV_IPL                     0xd
+#define EV_IPL_PARTITION_DATA      0xe
+#define EV_NONHOST_CODE            0xf
+#define EV_NONHOST_CONFIG          0x10
+#define EV_NONHOST_INFO            0x11
+#define EV_OMIT_BOOT_DEVICE_EVENTS 0x12
+
 
 /* TCG_PassThroughToTPM Input Parameter Block. */
 typedef struct
